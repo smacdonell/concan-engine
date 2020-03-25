@@ -33,6 +33,25 @@ class WildCard(Card):
     def __init__(self, wildCardName):
         super().__init__(wildCardName)
 
+    def setStandardCardNameOverride(self, standardCardNameOverride):
+        self.standardCardNameOverride = standardCardNameOverride
+
+    def getStandardCardNameOverride(self):
+        return self.standardCardNameOverride
+
+    def setSuitOverride(self, suitOverride):
+        self.suitOverride = suitOverride
+
+    def getSuitOverride(self):
+        return self.suitOverride
+
+    def __str__(self):
+        if self.standardCardNameOverride and self.suitOverride:
+            return self.cardName.getPrettyName() + (' (Masquerading as an '
+            + self.standardCardNameOverride.getPrettyName() + ' of ' + self.suitOverride.getPrettyName() + ')')
+        else:
+            return self.cardName.getPrettyName()
+
 class StandardCard(Card):
     def __init__(self, standardCardName, suit):
         super().__init__(standardCardName)

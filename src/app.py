@@ -7,15 +7,24 @@ from game.cards.card import *
 from game.cards.deck import Deck
 from game.util.image_getter import ImageFilenameGetter
 from game.cards.deck_color import DeckColor
-
+from game.gameplay.set import Set
 
 def main():
     deck = Deck(2, { WildCardName.JOKER: 1 }, True)
-    a = [1,2,3,4,5]
+    wild = WildCard(WildCardName.JOKER)
+    wild.setStandardCardNameOverride(StandardCardName.ACE)
+    wild.setSuitOverride(Suit.SPADES)
+    set = Set([StandardCard(StandardCardName.QUEEN, Suit.SPADES), wild,
+    StandardCard(StandardCardName.TWO, Suit.SPADES)])
 
-    a.sort(key=lambda x: x, reverse=not False)
+    for c in set.getCardsInSet():
+        print(c)
 
-    print(a)
+    a = [StandardCard(StandardCardName.TWO, Suit.SPADES), StandardCard(StandardCardName.ACE, Suit.SPADES),
+    StandardCard(StandardCardName.THREE, Suit.SPADES)]
+    b = [StandardCard(StandardCardName.KING, Suit.DIAMONDS)] + a
+
+
 
 if __name__=='__main__':
     main()
