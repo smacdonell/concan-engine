@@ -8,23 +8,30 @@ from game.cards.deck import Deck
 from game.util.image_getter import ImageFilenameGetter
 from game.cards.deck_color import DeckColor
 from game.gameplay.set import Set
+from game.util.card_utils import CardUtils
+from game.util.move_validator import MoveValidator
 
 def main():
-    deck = Deck(2, { WildCardName.JOKER: 1 }, True)
+    deck = Deck(2, { }, True)
     wild = WildCard(WildCardName.JOKER)
-    wild.setStandardCardNameOverride(StandardCardName.ACE)
-    wild.setSuitOverride(Suit.SPADES)
-    set = Set([StandardCard(StandardCardName.QUEEN, Suit.SPADES), wild,
-    StandardCard(StandardCardName.TWO, Suit.SPADES)])
+    wild.setStandardCardNameOverride(StandardCardName.JACK)
+    wild.setSuitOverride(Suit.HEARTS)
 
-    for c in set.getCardsInSet():
-        print(c)
+    set = Set([StandardCard(StandardCardName.SIX, Suit.SPADES),
+    StandardCard(StandardCardName.FOUR, Suit.SPADES),
+    StandardCard(StandardCardName.FIVE, Suit.SPADES),
+    StandardCard(StandardCardName.THREE, Suit.SPADES),
+    StandardCard(StandardCardName.TWO, Suit.SPADES),
+    StandardCard(StandardCardName.SEVEN, Suit.SPADES),
+    StandardCard(StandardCardName.ACE, Suit.SPADES),
+    StandardCard(StandardCardName.EIGHT, Suit.SPADES),
+    StandardCard(StandardCardName.QUEEN, Suit.SPADES),
+    StandardCard(StandardCardName.KING, Suit.SPADES),
+    wild,
+    StandardCard(StandardCardName.TEN, Suit.SPADES),
+    StandardCard(StandardCardName.NINE, Suit.SPADES)])
 
-    a = [StandardCard(StandardCardName.TWO, Suit.SPADES), StandardCard(StandardCardName.ACE, Suit.SPADES),
-    StandardCard(StandardCardName.THREE, Suit.SPADES)]
-    b = [StandardCard(StandardCardName.KING, Suit.DIAMONDS)] + a
-
-
+    print(MoveValidator.validateSet(set))
 
 if __name__=='__main__':
     main()

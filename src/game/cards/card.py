@@ -30,6 +30,9 @@ class Card(object):
         return hash(self.cardName.name)
 
 class WildCard(Card):
+    standardCardNameOverride = None
+    suitOverride = None    
+
     def __init__(self, wildCardName):
         super().__init__(wildCardName)
 

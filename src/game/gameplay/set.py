@@ -17,34 +17,44 @@ Suit.CLUBS (StandardCardName.FIVE, StandardCardName.SIX, StandardCardName.EIGHT)
 
 from game.cards.card import *
 from game.cards.card_name import *
+from game.util.card_utils import CardUtils
 
 class Set(object):
     def __init__(self, cards):
         self.cards = cards
-        self.__sortCards()
+        self.sortCardsByCardName()
 
-    def __sortCards(self):
-        self.cards.sort(key=lambda x: (x.getStandardCardNameOverride().value if isinstance(x, WildCard) else x.getCardName().value,
-        x.getSuitOverride().name if isinstance(x, WildCard) else x.getSuit()))
+    def sortCardsByCardName(self):
+        self.cards.sort(key=lambda x: (x.getStandardCardNameOverride().value if isinstance(x, WildCard) and x.getStandardCardNameOverride() else x.getCardName().value,
+        x.getSuitOverride().name if isinstance(x, WildCard) else x.getSuit().value))
 
-        # this attemps to figure out if the ace should be sorted as high or low
-        sum = 0
+        lowCardsFound = 0
+        highCardsFound = 0
         ace = None
         for card in self.cards:
-            if (isinstance(card, StandardCard) and card.getCardName() != StandardCardName.ACE):
-                sum += card.getCardName().value
-            if ((isinstance(card, StandardCard) and card.getCardName() == StandardCardName.ACE)
-            or (isinstance(card, WildCard) and card.getStandardCardNameOverride() == StandardCardName.ACE)):
+            if CardUtils.isLowCard(card):
+                lowCardsFound += 1
+            if CardUtils.isHighCardExcludingAce(card):
+                highCardsFound += 1
+            if (CardUtils.getStandardCardName(card) == StandardCardName.ACE):
                 ace = card
 
         if ace is not None:
-            if (len(self.cards) - 1 > 5 and sum < 30) or (len(self.cards) - 1 > 3 and sum < 20) or (sum < 15):
+            if lowCardsFound > highCardsFound:
                 self.cards.remove(ace)
                 self.cards = [ace] + self.cards
 
+    def sortCardsBySuit(self):
+        self.cards.sort(key=lambda x: (x.getSuitOverride().value if isinstance(x, WildCard) and x.getSuitOverride() else x.getSuit().value,
+        x.getStandardCardNameOverride().value if isinstance(x, WildCard) and x.getStandardCardNameOverride() else x.getCardName().value))
+
     def setCardsInSet(self, cards):
         self.cards = cards
-        self.__sortCards()
+        self.sortCardsByCardName()
 
     def getCardsInSet(self):
         return self.cards
+
+    def printSet(self):
+        for c in self.cards:
+            print(c)
