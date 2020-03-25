@@ -2,14 +2,13 @@
 Name of a playing card.  There are 14 different playing card names in any deck.
 """
 
-from enum import Enum, auto
+from enum import Enum
 
 class CardName(Enum):
     def getPrettyName(self):
         return self.name.capitalize()
 
 class StandardCardName(CardName):
-    ACE = 1
     TWO = 2
     THREE = 3
     FOUR = 4
@@ -22,6 +21,7 @@ class StandardCardName(CardName):
     JACK = 11
     QUEEN = 12
     KING = 13
+    ACE = 14
 
 class WildCardName(CardName):
-    JOKER = auto()
+    JOKER = 15

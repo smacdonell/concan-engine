@@ -17,11 +17,17 @@ class Card(object):
     def getCardName(self):
         return self.cardName
 
+    def getSuit(self):
+        return None
+
     def __str__(self):
         return self.cardName.getPrettyName()
 
     def __eq__(self, obj):
         return self.cardName == obj.cardName
+
+    def __hash__(self):
+        return hash(self.cardName.name)
 
 class WildCard(Card):
     def __init__(self, wildCardName):
@@ -40,3 +46,6 @@ class StandardCard(Card):
 
     def __eq__(self, obj):
         return self.cardName == obj.cardName and self.suit == obj.suit
+
+    def __hash__(self):
+        return hash(self.cardName.name + ':' + self.suit.name)

@@ -1,3 +1,9 @@
+"""
+Card deck and appropriate methods.  The decks of cards represented here are
+slack-like.  The 'top' of the deck is the last index, and the 'bottom' is
+the first index.
+"""
+
 from game.cards.card_name import StandardCardName
 from game.cards.card_name import WildCardName
 from game.cards.suit import Suit
@@ -5,6 +11,7 @@ from game.cards.card import StandardCard
 from game.cards.card import WildCard
 
 import random
+import copy
 
 class Deck(object):
     def __init__(self, numDecks, numWildMap, shuffleOnInit):
@@ -15,13 +22,14 @@ class Deck(object):
 
     def __initDeck(self, shuffleOnInit):
         self.cardDeck = []
+        self.discardDeck = []
 
         for i in range(0, self.numDecks):
             self.__populateStandardDeck()
             self.__populateWildDeck()
 
         if shuffleOnInit:
-            self.shuffleDeck()
+            self.shuffleCardDeck()
 
     def __populateStandardDeck(self):
         for cardName in StandardCardName:
@@ -35,16 +43,54 @@ class Deck(object):
                 wildCard = WildCard(wildType)
                 self.cardDeck.append(wildCard)
 
-    def shuffleDeck(self):
+    def shuffleCardDeck(self):
         for i in range(0, len(self.cardDeck)):
             rand = random.randrange(0, len(self.cardDeck))
             temp = self.cardDeck[i]
             self.cardDeck[i] = self.cardDeck[rand]
             self.cardDeck[rand] = temp
 
+    def getDeck(self):
+        return self.cardDeck
+
+    def addCardToDeck(self, card):
+        count = {}
+        for card in self.cardDeck:
+            count[card] = count.get(card, 0) + 1
+
+        if count[card] < self.numDecks:
+            self.cardDeck.append(card);
+
+    def removeCardFromDeck(self, card):
+        if card in self.cardDeck:
+            self.cardDeck.remove(card)
+
+    def getNextCardFromDeck(self):
+        nextCard = self.cardDeck.pop()
+
+        if len(self.cardDeck) <= 0:
+            self.cardDeck = copy.deepcopy(self.discardDeck)
+            self.discardDeck = []
+            self.shuffleCardDeck()
+
+        return nextCard
+
     def resetDeck(self):
         self.__initDeck(False)
 
     def printDeck(self):
         for card in self.cardDeck:
+            print(card)
+
+    def getDiscardDeck(self):
+        return self.discardDeck
+
+    def addCardToDiscardDeck(self, card):
+        self.discardDeck.append(card)
+
+    def removeTopCardFromDiscardDeck(self):
+        return self.discardDeck.pop()
+
+    def printDiscardDeck(self):
+        for card in self.discardDeck:
             print(card)
