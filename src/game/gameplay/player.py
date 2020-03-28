@@ -6,12 +6,13 @@ from game.gameplay.hand import Hand
 import uuid
 
 class Player(object):
-    def __init__(self, name, turn):
+    def __init__(self, name, turnIndex):
         self.name = name
         self.id = uuid.uuid4()
         self.hand = Hand(True)
         self.score = 0
-        self.turn = turn
+        self.turnIndex = turnIndex
+        self.opened = False
 
     def getName(self):
         return self.name

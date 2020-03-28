@@ -28,3 +28,6 @@ class Hand(object):
 
     def sortHand(self):
         self.cardDeck.sort(key=lambda x: (x.getCardName().value, x.getSuit().name if x.getSuit() else 0), reverse=not self.leftToRightSort)
+
+    def getNumCardsInHand(self):
+        return len(self.cardsInHand)

@@ -1,6 +1,6 @@
 """
 Card deck and appropriate methods.  The decks of cards represented here are
-slack-like.  The 'top' of the deck is the last index, and the 'bottom' is
+stack-like.  The 'top' of the deck is the last index, and the 'bottom' is
 the first index.
 """
 
@@ -26,7 +26,8 @@ class Deck(object):
 
         for i in range(0, self.numDecks):
             self.__populateStandardDeck()
-            self.__populateWildDeck()
+
+        self.__populateWildDeck()
 
         if shuffleOnInit:
             self.shuffleCardDeck()
@@ -50,8 +51,11 @@ class Deck(object):
             self.cardDeck[i] = self.cardDeck[rand]
             self.cardDeck[rand] = temp
 
-    def getDeck(self):
+    def getCardDeck(self):
         return self.cardDeck
+
+    def setCardDeck(self, cardDeck):
+        self.cardDeck = cardDeck
 
     def addCardToDeck(self, card):
         count = {}
