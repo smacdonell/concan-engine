@@ -1,6 +1,10 @@
 from game.cards.card_name import *
 from game.cards.card import *
 
+import game.gameplay.set as set
+
+import json
+
 class CardUtils(object):
     __lowCards = [StandardCardName.TWO, StandardCardName.THREE,
     StandardCardName.FOUR, StandardCardName.FIVE, StandardCardName.SIX]
@@ -108,3 +112,37 @@ class CardUtils(object):
             return True
 
         return False
+
+    @classmethod
+    def getCardFromJson(clazz, cardJson):
+        try:
+            cardName = StandardCardName[cardJson['cardName']]
+            suit = Suit[cardJson['suit']]
+
+            if 'wild' in cardJson.keys():
+                card = WildCard(WildCardName[cardJson['wild']])
+                card.setStandardCardNameOverride(cardName)
+                card.setSuitOverride(suit)
+            else:
+                card = StandardCard(cardName, suit)
+
+            return card
+        except Exception as e:
+            print(e)
+            return None
+
+    @classmethod
+    def getSetsFromJson(clazz, setsJson):
+        sets = []
+        for setJson in setsJson:
+            cardsInSet = []
+            for cardJson in setJson:
+                cardsInSet.append(CardUtils.getCardFromJson(cardJson))
+
+            sets.append(set.Set(cardsInSet))
+
+        return sets
+
+    @classmethod
+    def parseMoveRequestJson(clazz, moveRequestJson):
+        print('TODO')

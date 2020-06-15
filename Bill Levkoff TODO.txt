@@ -1,0 +1,10 @@
+Bill Levkoff Tasks:
+- Update order export for line item attributes of Size and Length
+- Update shipment import for line item attributes of Size and Length
+- Add third party tracking scripts
+- Implement with Klaviyo
+- Add the rest of the product catalog and associated images
+- Get the product spec data
+- Add remember cart item functionality for item attributes items
+- Privacy Policy cms page
+- PDP reviews?

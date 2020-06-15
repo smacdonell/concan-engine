@@ -1,0 +1,198 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://scottconcan.com/move_request_schema.json",
+    "type": "object",
+    "title": "A move request schema",
+    "description": "This is the schema for a move request from the from end of the app",
+    "required": [
+        "playerId",
+        "discardedCard",
+        "newSets",
+        "board"
+    ],
+    "properties": {
+        "playerId": {
+            "$id": "#/properties/playerId",
+            "type": "string",
+            "title": "The playerId Schema",
+            "description": "The ID of the player making the move",
+            "default": "",
+            "examples": [
+                "149397b9-a9e4-4be7-8717-2bd131fdd9d9"
+            ]
+        },
+        "discardedCard": {
+            "$id": "#/properties/discardedCard",
+            "type": "object",
+            "title": "The discardedCard Schema",
+            "description": "The card being added to the discard pile",
+            "default": {},
+            "examples": [
+                {
+                    "cardName": "ACE",
+                    "suit": "SPADES"
+                }
+            ],
+            "required": [
+                "cardName",
+                "suit"
+            ],
+            "properties": {
+                "cardName": {
+                    "$id": "#/properties/discardedCard/properties/cardName",
+                    "type": "string",
+                    "title": "The cardName Schema",
+                    "description": "The StandardCardName of the card",
+                    "default": "",
+                    "examples": [
+                        "ACE"
+                    ]
+                },
+                "suit": {
+                    "$id": "#/properties/discardedCard/properties/suit",
+                    "type": "string",
+                    "title": "The suit Schema",
+                    "description": "The Suit of the card",
+                    "default": "",
+                    "examples": [
+                        "SPADES"
+                    ]
+                }
+            }
+        },
+        "newSets": {
+            "$id": "#/properties/newSets",
+            "type": "array",
+            "title": "The newSets Schema",
+            "description": "An array of new sets being added to the board",
+            "default": [],
+            "items": {
+                "$id": "#/properties/newSets/items",
+                "type": "array",
+                "title": "The Items Schema",
+                "description": "An array of cards in the set",
+                "default": [],
+                "minitems": 3,
+                "items": {
+                    "$id": "#/properties/newSets/items/items",
+                    "type": "object",
+                    "title": "The card schema",
+                    "description": "A card in the set",
+                    "default": {},
+                    "examples": [
+                        {
+                            "suit": "SPADES",
+                            "cardName": "ACE",
+                            "wild": "JOKER"
+                        },
+                        {
+                            "suit": "DIAMONDS",
+                            "cardName": "ACE"
+                        },
+                        {
+                            "cardName": "ACE",
+                            "suit": "HEARTS"
+                        }
+                    ],
+                    "required": [
+                        "cardName",
+                        "suit"
+                    ],
+                    "properties": {
+                        "cardName": {
+                            "$id": "#/properties/newSets/items/items/properties/cardName",
+                            "type": "string",
+                            "title": "The cardName Schema",
+                            "description": "The StandardCardName of this card",
+                            "default": "",
+                            "examples": [
+                                "ACE"
+                            ]
+                        },
+                        "suit": {
+                            "$id": "#/properties/newSets/items/items/properties/suit",
+                            "type": "string",
+                            "title": "The suit Schema",
+                            "description": "The Suit of this card",
+                            "default": "",
+                            "examples": [
+                                "SPADES"
+                            ]
+                        },
+                        "wild": {
+                            "$id": "#/properties/newSets/items/items/properties/wild",
+                            "type": "string",
+                            "title": "The wild Schema",
+                            "description": "The WildCardName of this card, if wild",
+                            "default": "",
+                            "examples": [
+                                "JOKER"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "board": {
+            "$id": "#/properties/board",
+            "type": "array",
+            "title": "The board Schema",
+            "description": "An array of sets on the board",
+            "default": [],
+            "items": {
+                "$id": "#/properties/board/items",
+                "type": "array",
+                "title": "The Items Schema",
+                "description": "An array of cards in the set",
+                "default": [],
+                "items": {
+                    "$id": "#/properties/board/items/items",
+                    "type": "object",
+                    "title": "The Items Schema",
+                    "description": "A card object",
+                    "default": {},
+                    "examples": [
+                        {
+                            "cardName": "KING",
+                            "suit": "SPADES"
+                        },
+                        {
+                            "suit": "DIAMONDS",
+                            "cardName": "KING"
+                        },
+                        {
+                            "cardName": "KING",
+                            "suit": "HEARTS"
+                        }
+                    ],
+                    "required": [
+                        "cardName",
+                        "suit"
+                    ],
+                    "properties": {
+                        "cardName": {
+                            "$id": "#/properties/board/items/items/properties/cardName",
+                            "type": "string",
+                            "title": "The cardName Schema",
+                            "description": "The StandardCardName of this card",
+                            "default": "",
+                            "examples": [
+                                "KING"
+                            ]
+                        },
+                        "suit": {
+                            "$id": "#/properties/board/items/items/properties/suit",
+                            "type": "string",
+                            "title": "The suit Schema",
+                            "description": "The Suit of this card",
+                            "default": "",
+                            "examples": [
+                                "SPADES"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
